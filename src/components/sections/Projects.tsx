@@ -102,7 +102,6 @@ export default function Projects() {
     }
   ];
 
-  // --- BOOT SEQUENCE ---
   useEffect(() => {
     const sequence = async () => {
       setBootText("POWER ON...");
@@ -118,8 +117,6 @@ export default function Projects() {
     sequence();
   }, []);
 
-  // --- NEW: MODAL SCROLL LOCK EFFECT ---
-  // This physically locks the background from scrolling when the modal is open
   useEffect(() => {
     if (activeArchitecture) {
       document.body.style.overflow = "hidden";
@@ -131,7 +128,6 @@ export default function Projects() {
     };
   }, [activeArchitecture]);
 
-  // --- NAVIGATION CONTROLS ---
   const handleNext = useCallback(() => {
     setActiveIndex((prev) => (prev + 1) % projects.length);
   }, [projects.length]);
@@ -140,7 +136,6 @@ export default function Projects() {
     setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
   }, [projects.length]);
 
-  // --- PHYSICS ENGINE ---
   const xDrag = useMotionValue(0);
   const controls = useAnimation();
 
@@ -157,7 +152,6 @@ export default function Projects() {
     controls.start({ x: 0, transition: { type: "spring", stiffness: 300, damping: 25, mass: 1 } });
   };
 
-  // --- AUTOPLAY ENGINE ---
   useEffect(() => {
     if (!isHovering && !isBooting && !activeArchitecture) {
       const timer = setInterval(() => handleNext(), 6000);
@@ -168,7 +162,7 @@ export default function Projects() {
   return (
     <main className="bg-[#030303] min-h-screen font-sans selection:bg-blue-600 selection:text-white pb-32 overflow-hidden relative">
       
-      {/* --- 0. SMARTPHONE BOOT ANIMATION --- */}
+      {/* Boot Animation */}
       <AnimatePresence>
         {isBooting && (
           <motion.div 
@@ -188,7 +182,7 @@ export default function Projects() {
         )}
       </AnimatePresence>
 
-      {/* --- ADVANCED ARCHITECTURE MODAL --- */}
+      {/* Architecture Modal */}
       <AnimatePresence>
         {activeArchitecture && (
           <motion.div
@@ -197,7 +191,7 @@ export default function Projects() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[300] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
             onClick={() => setActiveArchitecture(null)}
-            data-lenis-prevent="true" // Tells Lenis to ignore background scrolling here
+            data-lenis-prevent="true"
           >
             <motion.div
               initial={{ y: 50, scale: 0.95 }}
@@ -207,16 +201,18 @@ export default function Projects() {
               onClick={(e) => e.stopPropagation()} 
               className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-10 max-w-2xl w-full shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]"
             >
-              <div className={`absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br ${activeArchitecture.themeColor} opacity-10 rounded-full blur-[80px]`}></div>
+              <div className={`absolute -top-32 -right-32 w-64 h-64 bg-gradient-to-br ${activeArchitecture.themeColor} opacity-10 rounded-full blur-[80px] pointer-events-none`}></div>
 
+              {/* FIXED: Close Button is now absolute to the modal container, with a high z-index, and a distinct background so it's always visible and clickable */}
               <button
-                className="absolute top-6 right-6 text-gray-500 hover:text-white transition-colors bg-white/5 hover:bg-white/10 p-2 rounded-full z-10"
+                className="absolute top-4 right-4 md:top-6 md:right-6 text-gray-400 hover:text-white transition-colors bg-[#111] hover:bg-white/10 border border-white/10 p-2.5 rounded-full z-50 shadow-lg"
                 onClick={() => setActiveArchitecture(null)}
+                aria-label="Close modal"
               >
                 <X size={20} />
               </button>
 
-              <div className="flex items-center gap-3 mb-8 relative z-10">
+              <div className="flex items-center gap-3 mb-8 relative z-10 pr-12">
                 <div className={`p-2 rounded-xl bg-gradient-to-br ${activeArchitecture.themeColor} bg-opacity-20`}>
                   <LayoutTemplate size={24} className="text-white" />
                 </div>
@@ -226,10 +222,8 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Added data-lenis-prevent here to allow normal scrolling inside the box */}
-              <div className="overflow-y-auto pr-2 custom-scrollbar space-y-6 relative z-10" data-lenis-prevent="true">
+              <div className="overflow-y-auto pr-3 custom-scrollbar space-y-6 relative z-10 pb-4" data-lenis-prevent="true">
                 
-                {/* Problem & Solution Block */}
                 <div className="space-y-4">
                   <div>
                     <h4 className="text-xs font-space font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-2">
@@ -250,7 +244,6 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Security & Uniqueness */}
                 <div>
                   <h4 className="text-xs font-space font-bold text-blue-400 uppercase tracking-widest mb-2 flex items-center gap-2">
                     <ShieldCheck size={14} /> Security & Architecture
@@ -260,7 +253,6 @@ export default function Projects() {
                   </p>
                 </div>
 
-                {/* Value by Role */}
                 <div>
                   <h4 className="text-xs font-space font-bold text-purple-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                     <Users size={14} /> Value Created
@@ -275,7 +267,6 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Conditional Highlighted Disclaimer */}
                 {activeArchitecture.disclaimer && (
                   <div className="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/30 flex items-start gap-3">
                     <AlertTriangle className="text-red-400 shrink-0 mt-0.5" size={20} />
@@ -290,7 +281,6 @@ export default function Projects() {
         )}
       </AnimatePresence>
 
-      {/* --- 1. THE PARTNERSHIP HOOK --- */}
       <div className="pt-32 pb-10 max-w-5xl mx-auto px-6 text-center relative z-10 pointer-events-none">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} animate={!isBooting ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }} 
@@ -315,7 +305,6 @@ export default function Projects() {
         </motion.p>
       </div>
 
-      {/* --- 2. ADVANCED FANNED STACK GALLERY --- */}
       <div 
         className="relative h-[70vh] md:h-[80vh] w-full flex items-center justify-center mt-4"
         onMouseEnter={() => setIsHovering(true)}
@@ -352,11 +341,11 @@ export default function Projects() {
               return (
                 <motion.div 
                   key={project.id}
-                  layout
+                  layout="position" // OPTIMIZATION: Only animate layout position, not absolute bounds, prevents lag.
                   initial={false}
                   animate={isInteractive ? controls : undefined}
                   style={isInteractive ? { x: xDrag } : {}}
-                  transition={{ type: "spring", stiffness: 300, damping: 25, mass: 1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30, mass: 0.8 }} // OPTIMIZATION: Snappier spring reduces floating lag.
                   {...(!isInteractive && { animate: { x: xPos, y: yPos, scale, opacity, zIndex, rotate: rotateZ } })}
                   {...(isInteractive && { animate: { scale, opacity, zIndex, rotate: rotateZ } })}
                   
@@ -368,16 +357,15 @@ export default function Projects() {
                     if (normalizedOffset === 1) handleNext();
                     if (normalizedOffset === -1) handlePrev();
                   }}
-                  className={`absolute w-[85vw] md:w-[45vw] lg:w-[35vw] h-[65vh] md:h-[75vh] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#080808] ${isInteractive ? 'cursor-grab active:cursor-grabbing shadow-[0_0_80px_rgba(0,0,0,0.8)]' : 'cursor-pointer'} transition-shadow duration-300 flex flex-col`}
+                  // OPTIMIZATION: Added will-change-transform to force GPU rendering for buttery smooth swaps.
+                  className={`absolute w-[85vw] md:w-[45vw] lg:w-[35vw] h-[65vh] md:h-[75vh] rounded-[2rem] md:rounded-[2.5rem] overflow-hidden border border-white/10 bg-[#080808] ${isInteractive ? 'cursor-grab active:cursor-grabbing shadow-[0_0_80px_rgba(0,0,0,0.8)]' : 'cursor-pointer'} transition-shadow duration-300 flex flex-col will-change-transform`}
                 >
-                  {/* Top Image Section */}
                   <div className="absolute inset-0 pointer-events-none">
                     <img src={project.imageSrc} alt={project.title} className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isInteractive ? 'opacity-40 scale-100' : 'opacity-20 scale-110 grayscale'}`} />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#030303] via-[#030303]/80 to-transparent"></div>
                     <div className={`absolute inset-0 bg-gradient-to-br ${project.themeColor} opacity-20 mix-blend-overlay`}></div>
                   </div>
 
-                  {/* Card Content Overlay */}
                   <div className={`relative flex-1 p-6 md:p-10 flex flex-col justify-end z-10 transition-opacity duration-500 ${isInteractive ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                     
                     <div className="mb-auto self-end mt-2 pointer-events-none">
@@ -441,7 +429,6 @@ export default function Projects() {
         </div>
       </div>
 
-      {/* --- 3. THE CONTACT BRIDGE --- */}
       <motion.div 
         initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1 }}
         className="max-w-4xl mx-auto mt-20 px-6 text-center bg-gradient-to-b from-white/[0.01] to-transparent border-t border-white/5 pt-24 pb-12 rounded-[3rem] relative z-10"
