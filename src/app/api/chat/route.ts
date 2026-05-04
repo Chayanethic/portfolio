@@ -12,7 +12,7 @@ const genAI = new GoogleGenerativeAI(apiKey || "");
 // THE "BRAIN" OF YOUR AI
 // This tells Gemini exactly who you are, what you build, and how to act.
 const SYSTEM_INSTRUCTION = `
-You are the personal AI assistant on the professional portfolio website of Chayan (also known as Soumyajit Dash).
+You are the personal AI assistant on the professional portfolio website of Chayan (also known as Chayan Neogi).
 Your job is to answer questions about Chayan's skills, experience, and projects professionally and concisely.
 
 Here is everything you need to know about Chayan:
