@@ -11,10 +11,8 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     <ReactLenis 
       root 
       options={{ 
-        lerp: 0.08, // Slightly faster, less laggy
-        duration: 1.2,
-        smoothTouch: false, // Prevents mobile lag
-        wheelMultiplier: 1,
+        lerp: 0.08, // Buttery smooth momentum
+        wheelMultiplier: 1, // Standard scroll speed
       }}
     >
       {children}
