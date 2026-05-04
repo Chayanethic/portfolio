@@ -57,7 +57,7 @@ export default function Hero() {
           {/* Glowing ring around the massive photo */}
           <div className="absolute inset-0 rounded-full border border-blue-500/30 shadow-[0_0_80px_rgba(37,99,235,0.2)] animate-pulse"></div>
           <img
-            src="/ChatGPT Image May 3, 2026, 07_44_48 PM.png" 
+            src="https://res.cloudinary.com/dnpudf84r/image/upload/v1777898962/ChatGPT_Image_May_4_2026_12_36_41_AM_y9uhrb.png" 
             alt="Chayan Neogi"
             className="w-48 h-48 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full border-2 border-white/10 shadow-2xl mb-8 md:mb-12 object-cover relative z-20"
           />
