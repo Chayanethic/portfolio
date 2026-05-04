@@ -11,11 +11,12 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     <ReactLenis 
       root 
       options={{ 
-        lerp: 0.08, // Buttery smooth momentum
-        wheelMultiplier: 1, // Standard scroll speed
+        lerp: 0.08, 
+        wheelMultiplier: 1, 
       }}
     >
-      {children}
+      {/* Bypass the React 19 vs React 18 type mismatch */}
+      {children as any}
     </ReactLenis>
   );
 }
