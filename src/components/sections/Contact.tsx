@@ -15,7 +15,7 @@ export default function Contact() {
   const telegram = process.env.NEXT_PUBLIC_TELEGRAM_USERNAME;
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText("your.email@gmail.com"); // Replace with your email
+    navigator.clipboard.writeText("chayanneogi12@gmail.com"); // Replace with your email
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
